@@ -1,8 +1,3 @@
-## sbt project compiled with Scala 3
+## Mazes
 
-### Usage
-
-This is a normal sbt project. You can compile code with `sbt compile`, run it with `sbt run`, and `sbt console` will start a Scala 3 REPL.
-
-For more information on the sbt-dotty plugin, see the
-[scala3-example-project](https://github.com/scala/scala3-example-project/blob/main/README.md).
+Not really sure where this is going yet; will update as progress is made. Currently intended to be some sort of maze-based game designed to use some of the graph theory and scala I have recently learnt.
