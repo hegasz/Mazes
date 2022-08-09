@@ -2,14 +2,14 @@ package Buildin
 
 object buildingBlocks{
 
+    sealed trait Direction
 
-    object Direction extends Enumeration {
-        type Direction = Value
-        val N = Value("N")
-        val E = Value("E")
-        val S = Value("S")
-        val W = Value("W")
-    } 
+    object Direction{
+        case object N extends Direction
+        case object E extends Direction
+        case object S extends Direction
+        case object W extends Direction
+    }
 
     import Direction._
 
@@ -31,7 +31,6 @@ object buildingBlocks{
         case Direction.S => (p._1, p._2-1)
         case Direction.W => (p._1-1, p._2)
     }
-    
     
 }
 
