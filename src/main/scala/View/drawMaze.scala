@@ -68,6 +68,11 @@ object DrawMaze extends JFXApp3 {
         
         stage = new JFXApp3.PrimaryStage
 
+        screenDimensions.onChange(Platform.runLater {
+            GameController.reSize(screenDimensions.value.width, screenDimensions.value.height)
+        })
+
+        /**
         val gameScene: Scene = new Scene(800,600) {
             val borderPane: BorderPane = new BorderPane()
             val topBox: HBox = new HBox()
@@ -126,11 +131,12 @@ object DrawMaze extends JFXApp3 {
                 content = borderPane
             })
         }
+        */
 
         val tempScene: Scene = new Scene(800,600)
 
         SceneController.scene = tempScene
-        SceneController.switchToMenu()
+        SceneController.switchToGame()
 
         stage.setScene(tempScene)
         stage.show()
