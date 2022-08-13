@@ -29,10 +29,20 @@ import javafx.scene.paint.Color
   * @param windowHeight
   * @param lineThicknessPercentage
   */
-class GridDrawing(size: Size, windowWidth: Int, windowHeight: Int, lineThicknessPercentage: Double = 5){
+class GridDrawing(size: Size, mazeInput: Maze, val boxSize: Double, lineThicknessPercentage: Double = 5){
+
+    // TO-DO: CLEAN UP - QUITE A LOT OF THESE METHODS NOT ACTUALLY NEEDED
+
+    val windowWidth: Double = boxSize; val windowHeight: Double = boxSize
+
+    //private var windowWidth = stage.getWidth()
+    //private var windowHeight = stage.getHeight()
+
     private val numCols: Int = size._1; private val numRows: Int = size._2
-    private val lineLength: Int = (windowWidth/numCols).min(windowHeight/numRows)
-    private val lineWidth: Double = (lineThicknessPercentage/100)*lineLength
+
+
+    private var lineLength: Double = (windowWidth/numCols).min(windowHeight/numRows)
+    private var lineWidth: Double = (lineThicknessPercentage/100)*lineLength
 
     // NOTE:
     // GridPane coordinates start in the top left, so are numbered as follows:
@@ -40,10 +50,24 @@ class GridDrawing(size: Size, windowWidth: Int, windowHeight: Int, lineThickness
     // (0,1) (1,1) etc
     //  etc   etc
     // THIS IS DIFFERENT TO MAZE GRID WHICH STARTS IN BOTTOM LEFT
-    val grid = new GridPane()
-    initialiseGrid()
+    var grid: GridPane = new GridPane()
+    var maze: Maze = mazeInput
+    //initialiseGrid()
+    drawGrid()
 
-    def makeClosedCell: Pane = {
+    /**
+    stage.widthProperty().onChange{
+        windowWidth = stage.getWidth()
+        windowHeight = stage.getHeight()
+        lineLength = (windowWidth/numCols).min(windowHeight/numRows).toInt
+        lineWidth = (lineThicknessPercentage/100)*lineLength
+        grid = new GridPane()
+        initialiseGrid()
+        drawGrid()
+    }
+    */
+
+    def makeClosedCell(withEast: Boolean = false, withSouth: Boolean = false): Pane = {
         val canvas: Pane = new Pane()
         canvas.setPrefSize(lineLength,lineLength)
         val wallN = Line(0,0,lineLength,0)
@@ -51,33 +75,95 @@ class GridDrawing(size: Size, windowWidth: Int, windowHeight: Int, lineThickness
         val wallW = Line(0,0,0,lineLength)
         wallW.setStrokeWidth(lineWidth)
         canvas.getChildren().addAll(wallN,wallW)
+        if(withEast){
+            val wallE = Line(lineLength,0,lineLength,lineLength)
+            wallE.setStrokeWidth(lineWidth)
+            canvas.getChildren().add(wallE)
+        }
+        if(withSouth){
+            val wallS = Line(0,lineLength,lineLength,lineLength)
+            wallS.setStrokeWidth(lineWidth)
+            canvas.getChildren().add(wallS)
+        }
         return canvas
     }
 
-    def makeOpenW: Pane = {
+    def makeOpenW(withEast: Boolean = false, withSouth: Boolean = false): Pane = {
         val canvas: Pane = new Pane()
         canvas.setPrefSize(lineLength,lineLength)
         val wallN: Line = new Line(0,0,lineLength,0)
         wallN.setStrokeWidth(lineWidth)
         canvas.getChildren().add(wallN)
+        if(withEast){
+            val wallE = Line(lineLength,0,lineLength,lineLength)
+            wallE.setStrokeWidth(lineWidth)
+            canvas.getChildren().add(wallE)
+        }
+        if(withSouth){
+            val wallS = Line(0,lineLength,lineLength,lineLength)
+            wallS.setStrokeWidth(lineWidth)
+            canvas.getChildren().add(wallS)
+        }
         return canvas
     }
 
-    def makeOpenN: Pane = {
+    def makeOpenN(withEast: Boolean = false, withSouth: Boolean = false): Pane = {
         val canvas: Pane = new Pane()
         canvas.setPrefSize(lineLength,lineLength)
         val wallW: Line = new Line(0,0,0,lineLength)
         wallW.setStrokeWidth(lineWidth)
         canvas.getChildren().add(wallW)
+        if(withEast){
+            val wallE = Line(lineLength,0,lineLength,lineLength)
+            wallE.setStrokeWidth(lineWidth)
+            canvas.getChildren().add(wallE)
+        }
+        if(withSouth){
+            val wallS = Line(0,lineLength,lineLength,lineLength)
+            wallS.setStrokeWidth(lineWidth)
+            canvas.getChildren().add(wallS)
+        }
         return canvas
     }
+
+    def makeEast(): Pane = {
+        val canvas: Pane = new Pane()
+        canvas.setPrefSize(lineLength,lineLength)
+        val wallE: Line = new Line(lineLength,0,lineLength,lineLength)
+        wallE.setStrokeWidth(lineWidth)
+        canvas.getChildren().add(wallE)
+        return canvas
+    }
+
+    def makeSouth(): Pane = {
+        val canvas: Pane = new Pane()
+        canvas.setPrefSize(lineLength,lineLength)
+        val wallS: Line = new Line(0,lineLength,lineLength,lineLength)
+        wallS.setStrokeWidth(lineWidth)
+        canvas.getChildren().add(wallS)
+        return canvas
+    }
+
+    def makeSouthEastCorner(): Pane = {
+        val canvas: Pane = new Pane()
+        canvas.setPrefSize(lineLength,lineLength)
+        val wallE = Line(lineLength,0,lineLength,lineLength)
+        wallE.setStrokeWidth(lineWidth)
+        val wallS = Line(0,lineLength,lineLength,lineLength)
+        wallS.setStrokeWidth(lineWidth)
+        canvas.getChildren().addAll(wallE,wallS)
+        return canvas
+    }
+
+
+
+
 
     def initialiseGrid(): Unit = {
         for (i <- 0 until numCols) {
             val colConst = new ColumnConstraints()
             colConst.setMinWidth(lineLength)
             colConst.setMaxWidth(lineLength)
-
             grid.getColumnConstraints().add(colConst)
         }
         for (i <- 0 until numRows) {
@@ -87,6 +173,7 @@ class GridDrawing(size: Size, windowWidth: Int, windowHeight: Int, lineThickness
             grid.getRowConstraints().add(rowConst)      
         }
     }
+
     
     // ridiculously stupid way to retrieve object at a 
     // certain coordinate in grid, but seems to be the
@@ -101,17 +188,17 @@ class GridDrawing(size: Size, windowWidth: Int, windowHeight: Int, lineThickness
     }
 
     def setOpenW(x: Int, y: Int): Unit = {
-        val openW: Pane = makeOpenW
+        val openW: Pane = makeOpenW()
         grid.getChildren().remove(getFromGrid(x, y))
         grid.add(openW,x,y)
     }
     def setOpenN(x: Int, y: Int): Unit = {
-        val openN: Pane = makeOpenN
+        val openN: Pane = makeOpenN()
         grid.getChildren().remove(getFromGrid(x, y))
         grid.add(openN,x,y)
     }
     def setClosedCell(x: Int, y: Int): Unit = {
-        val closedCell: Pane = makeClosedCell
+        val closedCell: Pane = makeClosedCell()
         grid.getChildren().remove(getFromGrid(x, y))
         grid.add(closedCell,x,y)
     }
@@ -119,6 +206,10 @@ class GridDrawing(size: Size, windowWidth: Int, windowHeight: Int, lineThickness
         grid.getChildren().remove(getFromGrid(x, y))
     }
 
+    /** DEPRECATED
+     * I think objects of this class should always keep
+     * with them a maze field and always display according
+     * to this maze.
     def drawPlainGrid(): Unit = {
         for(j <- 0 until numRows){
             for(i <- 0 until numCols){
@@ -130,28 +221,49 @@ class GridDrawing(size: Size, windowWidth: Int, windowHeight: Int, lineThickness
             grid.add(makeOpenW,i,numRows)
         }
     }
+    */
 
-    def drawMazeGrid(maze: Maze): Unit = {
-        val mazeSize = maze.size
-        require(mazeSize == size)
+    def drawGrid(): Unit = {
         val mazeGrid = maze.grid
         
         for(j <- 0 until numRows){
             var mazeGridJ = numRows - 1 - j
             for(i <- 0 until numCols){
                 var dirSet = mazeGrid(mazeGridJ)(i)
-                if(!((dirSet contains N) && (dirSet contains W))){
-                    if(dirSet contains N) grid.add(makeOpenN,i,j)
-                    else if(dirSet contains W) grid.add(makeOpenW,i,j)
-                    else grid.add(makeClosedCell,i,j)
+                // annoying boilerplate code warning:
+                if(i != numCols-1 && j != numRows-1){ // inner cells
+                    if(!((dirSet contains N) && (dirSet contains W))){
+                        if(dirSet contains N) grid.add(makeOpenN(),i,j)
+                        else if(dirSet contains W) grid.add(makeOpenW(),i,j)
+                        else grid.add(makeClosedCell(),i,j)
+                    }
+                }
+                else if(i == numCols-1 && j != numRows-1){ // right non-corner cells
+                    if(!((dirSet contains N) && (dirSet contains W))){
+                        if(dirSet contains N) grid.add(makeOpenN(withEast = true),i,j)
+                        else if(dirSet contains W) grid.add(makeOpenW(withEast = true),i,j)
+                        else grid.add(makeClosedCell(withEast = true),i,j)
+                    }
+                    else grid.add(makeEast(),i,j)
+                }
+                else if(i != numCols-1 && j == numRows-1){ // bottom non-corner cells
+                    if(!((dirSet contains N) && (dirSet contains W))){
+                        if(dirSet contains N) grid.add(makeOpenN(withSouth = true),i,j)
+                        else if(dirSet contains W) grid.add(makeOpenW(withSouth = true),i,j)
+                        else grid.add(makeClosedCell(withSouth = true),i,j)
+                    }
+                    else grid.add(makeSouth(),i,j)
+                }
+                else{
+                    if(!((dirSet contains N) && (dirSet contains W))){ // bottom right corner cell
+                        if(dirSet contains N) grid.add(makeOpenN(withEast = true, withSouth = true),i,j)
+                        else if(dirSet contains W) grid.add(makeOpenW(withEast = true, withSouth = true),i,j)
+                        else grid.add(makeClosedCell(withEast = true, withSouth = true),i,j)
+                    }
+                    else grid.add(makeSouthEastCorner(),i,j)
                 }
             }
-            grid.add(makeOpenN,numCols,j)
         }
-        for(i <- 0 until numCols){
-            grid.add(makeOpenW,i,numRows)
-        }
-        
     }
 }
 
