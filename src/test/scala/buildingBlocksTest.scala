@@ -2,6 +2,15 @@ import algorithms.buildingBlocks._
 import Direction._
 
 class buildingBlocksSuite extends munit.FunSuite {
+    test("getEmptyGrid test"){
+        val empty: Array[Array[Set[Direction]]] = Array()
+        assert(getEmptyGrid(0,0).isEmpty)
+        assert(getEmptyGrid(5,0).isEmpty)
+        assert(getEmptyGrid(0,3).forall(_.isEmpty))
+        assert(getEmptyGrid(3,3).forall(_.forall(_.isEmpty)))
+        assert(getEmptyGrid(3,5).size == 5)
+        assert(getEmptyGrid(3,5)(0).size == 3)
+    }
     test("isWithin tests"){
         assert(isWithin(Point(3,4),(4,5)) == true)
         assert(isWithin(Point(-3,4),(1,1)) == false)

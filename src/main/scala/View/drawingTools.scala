@@ -32,7 +32,7 @@ case class ScreenDimensions(var width: Double, var height: Double)
   * @param windowHeight
   * @param lineThicknessPercentage
   */
-case class GridState(size: Size, mazeInput: Maze, val boxSize: Double, lineThicknessPercentage: Double = 5, borderThicknessMultiplier: Int = 10){
+case class GridCanvas(size: Size, mazeInput: Maze, val boxSize: Double, lineThicknessPercentage: Double = 5, borderThicknessMultiplier: Int = 10){
 
     // TO-DO: CLEAN UP - QUITE A LOT OF THESE METHODS NOT ACTUALLY NEEDED
 
@@ -135,4 +135,3 @@ case class GridState(size: Size, mazeInput: Maze, val boxSize: Double, lineThick
         }
     }
 }
-               

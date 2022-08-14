@@ -27,6 +27,12 @@ object buildingBlocks{
     // you must call grid(y)(x), in the order opposite to usual coordinate use.
     type Grid = Array[Array[Set[Direction]]]
 
+    def getEmptyGrid(numCols: Int, numRows: Int): Grid = {
+        // note inverted x and y in tabulate call
+        val grid: Grid = Array.tabulate[Set[Direction]](numRows,numCols)((_,_) => Set())
+        return grid
+    }
+
     case class Maze(grid: Grid, size: Size)
 
     /** Assigns an index to each grid point, starting from bottom left

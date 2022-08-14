@@ -51,13 +51,8 @@ object DrawMaze extends JFXApp3 {
 
     override def start(): Unit = {
 
-        val size: Size = (5,9)
-        val maze: Maze = RecursiveBacktrackingMazeBuilder(size)
-        val gridState = ObjectProperty(GridState(size, maze, 900))
-        // ratio of screen filled up by central SQUARE box
-        // decided by whichever of height and width is limiting
-        val mazeBoxRatio: Double = 0.7 // require this is between 0 and 1
-        
+        println(getEmptyGrid(3,3))
+
         val frame = IntegerProperty(0)
         val screenDimensions = ObjectProperty(ScreenDimensions(900,700))
 
@@ -136,7 +131,7 @@ object DrawMaze extends JFXApp3 {
         val tempScene: Scene = new Scene(800,600)
 
         SceneController.scene = tempScene
-        SceneController.switchToGame()
+        SceneController.switchToMenu()
 
         stage.setScene(tempScene)
         stage.show()

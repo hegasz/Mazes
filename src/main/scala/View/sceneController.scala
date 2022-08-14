@@ -17,11 +17,9 @@ object SceneController{
 
     private val hashMap: HashMap[String, Pane] = new HashMap()
 
-    hashMap += ("menu" -> Menu.menuPane)
-    hashMap += ("menu2" -> Menu2Pane.menu2Pane)
+    hashMap += ("menu" -> MenuPane.menuPane)
     hashMap += ("game" -> GamePane.gamePane)
     
-
     def add(name: String, pane: Pane): Unit = {
         hashMap += (name->pane)
     }
@@ -30,7 +28,6 @@ object SceneController{
         hashMap -= name
     }
 
-    def switchToMenu2(): Unit = setPane("menu2")
     def switchToMenu(): Unit = setPane("menu")
     def switchToGame(): Unit = setPane("game")
 
