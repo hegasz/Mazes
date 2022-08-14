@@ -40,7 +40,7 @@ object GamePane{
     rightBox.setStyle("-fx-background-color: #755139FF;")
     val centerBox: Pane = new Pane()
     centerBox.setStyle("-fx-background-color: #F2EDD7FF;")
-    centerBox.getChildren().add(GameController.getGridCanvas())
+    centerBox.getChildren().add(GameController.getGameStack())
 
     borderPane.setTop(topBox)
     borderPane.setBottom(bottomBox)
@@ -73,7 +73,7 @@ object GamePane{
         var borderHeight: Double = 0; var borderWidth: Double = 0
         
         centerBox.getChildren().clear()
-        centerBox.getChildren().add(GameController.getGridCanvas())
+        centerBox.getChildren().add(GameController.getGameStack())
 
         centerBox.setMinWidth(boxSize)
         centerBox.setMinHeight(boxSize)

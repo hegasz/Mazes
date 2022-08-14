@@ -34,7 +34,7 @@ case class ScreenDimensions(var width: Double, var height: Double)
   * @param windowHeight
   * @param lineThicknessPercentage
   */
-case class GridCanvas(size: Size, mazeInput: Maze, val boxSize: Double, lineThicknessPercentage: Double = 5, borderThicknessMultiplier: Int = 1, forDisplayOnly: Boolean = false){
+case class GameStack(size: Size, mazeInput: Maze, val boxSize: Double, lineThicknessPercentage: Double = 5, borderThicknessMultiplier: Int = 1, forDisplayOnly: Boolean = false){
 
     // TO-DO: CLEAN UP - QUITE A LOT OF THESE METHODS NOT ACTUALLY NEEDED
 
@@ -58,6 +58,7 @@ case class GridCanvas(size: Size, mazeInput: Maze, val boxSize: Double, lineThic
     var maze: Maze = mazeInput
     var grid = gridCanvas.getGraphicsContext2D()
     var player = playerCanvas.getGraphicsContext2D()
+    var playerX: Int = 0; var playerY: Int = 0 // player (0,0) is bottom left
 
     grid.setStroke(Color.BLACK)
 
@@ -66,6 +67,7 @@ case class GridCanvas(size: Size, mazeInput: Maze, val boxSize: Double, lineThic
     if(forDisplayOnly) drawDisplayGrid()
     else drawGrid()
 
+    drawPlayerAtGridCoords(0,0)
     
 
     // Draw canvas border
@@ -82,10 +84,16 @@ case class GridCanvas(size: Size, mazeInput: Maze, val boxSize: Double, lineThic
 
     // Turn a grid i index into canvas coordinates.
     // Indices start in top left as per graphics standard.
-    def iToCoord(index: Int): Double = (lineLength * index) + sideOffset
+    def iToCoord(index: Int): Double = {
+        require(index>=0 && index < numCols)
+        (lineLength * index) + sideOffset
+    }
     // Turn a grid j index into canvas coordinates.
     // Indices start in top left as per graphics standard.
-    def jToCoord(index: Int): Double = (lineLength * index) + topOffset
+    def jToCoord(index: Int): Double = {
+        require(index>=0 && index < numRows)
+        (lineLength * index) + topOffset
+    }
 
     def drawTopLeftCorner(i: Int, j: Int): Unit = {
         val x: Double = iToCoord(i); val y: Double = jToCoord(j) // (x,y) is top left of this cell
@@ -149,7 +157,7 @@ case class GridCanvas(size: Size, mazeInput: Maze, val boxSize: Double, lineThic
         val x: Double = iToCoord(numCols-1); val y: Double = jToCoord(0)
         grid.setLineWidth(lineWidth/4)
         grid.setFont(Font.font("Monospaced", (lineLength/5).toInt))
-        grid.strokeText("finish",x+lineLength/7,y+lineLength/2)
+        grid.strokeText("finish",x+lineLength/7,y+lineLength*0.55)
         grid.setLineWidth(lineWidth)
     }
 
@@ -191,4 +199,45 @@ case class GridCanvas(size: Size, mazeInput: Maze, val boxSize: Double, lineThic
         }
     }
     
+    def drawPlayerAtGridCoords(i: Int, j: Int): Unit = {
+        require(i >= 0 && i < numCols && j >= 0 && j < numRows)
+        // y is now opposite to graphic coordinates
+        val x: Double = iToCoord(i); val y: Double = jToCoord(numRows-1-j)
+        player.clearRect(0, 0, boxSize, boxSize)
+        val diameter: Double = lineLength/4
+        player.fillOval(x+(lineLength*3/8), y+(lineLength*3/8), diameter, diameter)
+    }
+
+    def movePlayerLeft(): Unit = {
+        val newPlayerX = playerX - 1
+        val doesMazeAllow = maze.grid(playerY)(playerX) contains W
+        if(newPlayerX >= 0 && doesMazeAllow){
+            drawPlayerAtGridCoords(newPlayerX, playerY)
+            playerX = newPlayerX
+        }
+    }
+    def movePlayerRight(): Unit = {
+        val newPlayerX = playerX + 1
+        val doesMazeAllow = maze.grid(playerY)(playerX) contains E
+        if(newPlayerX < numCols && doesMazeAllow){
+            drawPlayerAtGridCoords(newPlayerX, playerY)
+            playerX = newPlayerX
+        }
+    }
+    def movePlayerUp(): Unit = {
+        val newPlayerY = playerY + 1
+        val doesMazeAllow = maze.grid(playerY)(playerX) contains N
+        if(newPlayerY < numRows && doesMazeAllow){
+            drawPlayerAtGridCoords(playerX, newPlayerY)
+            playerY = newPlayerY
+        }
+    }
+    def movePlayerDown(): Unit = {
+        val newPlayerY = playerY - 1
+        val doesMazeAllow = maze.grid(playerY)(playerX) contains S
+        if(newPlayerY >= 0 && doesMazeAllow){
+            drawPlayerAtGridCoords(playerX, newPlayerY)
+            playerY = newPlayerY
+        }
+    }
 }

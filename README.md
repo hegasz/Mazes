@@ -10,7 +10,9 @@ To-Do:
 - [ ] Add try-catch to all actions to increase safety
 - [ ] Add pop up box for if you want maze dimensions more than slider
 - [ ] Add maze construction animation
-- [ ] Add player that can move around
-- [ ] Add start and end tiles
-- [ ] Add win screen when end reached with possibility to restart or create a new maze
+- [x] Add player that can move around
+- [x] Add start and end tiles
+- [x] Add win screen when end reached with possibility to restart or create a new maze
 - [ ] Add time limit for solving maze (toggleable?)
+- [ ] Add either help button or a stackpane overlay with instructions that fades away.
+- [ ] Add another maze generation algorithm

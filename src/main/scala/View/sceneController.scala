@@ -19,6 +19,7 @@ object SceneController{
 
     hashMap += ("menu" -> MenuPane.menuPane)
     hashMap += ("game" -> GamePane.gamePane)
+    hashMap += ("end" -> WonPane.wonPane)
     
     def add(name: String, pane: Pane): Unit = {
         hashMap += (name->pane)
@@ -30,6 +31,7 @@ object SceneController{
 
     def switchToMenu(): Unit = setPane("menu")
     def switchToGame(): Unit = setPane("game")
+    def switchToEnd(): Unit = setPane("end")
 
     def setPane(name: String): Unit = {
         require(hashMap.contains(name), name + " is not a pane. Make sure it is added to this controller.")
