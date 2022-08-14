@@ -5,6 +5,6 @@ Not really sure where this is going yet; will update as progress is made. Curren
 To-Do:
 - [x] Implement recursive backtracking maze generation
 - [x] Implement recursive backtracking iteratively
-- [ ] Display mazes in a prettier way
+- [x] Display mazes in a prettier way
 - [ ] Implement Kruskal's with weave
-- [ ]
+- [ ] Add try-catch to all actions to increase safety
