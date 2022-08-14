@@ -46,4 +46,17 @@ object GameController{
     def getGridCanvas(): Canvas = gridState.value.canvas
 
     def getMazeBoxRatio(): Double = mazeBoxRatio
+
+    def moveLeft(): Unit = {
+        println("move L")
+    }
+    def moveRight(): Unit = {
+        println("move R")
+    }
+    def moveUp(): Unit = {
+        println("move U")
+    }
+    def moveDown(): Unit = {
+        println("move D")
+    }
 }

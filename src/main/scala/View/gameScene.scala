@@ -7,6 +7,8 @@ import scalafx.scene.layout.VBox
 import scalafx.scene.layout.Pane
 import javafx.event.EventHandler
 import javafx.event.ActionEvent
+import javafx.scene.input.KeyEvent
+import javafx.scene.input.KeyCode
 
 
 
@@ -15,7 +17,7 @@ object GamePane{
     val gamePane: Pane = new Pane()
     val borderPane: BorderPane = new BorderPane()
     val topBox: HBox = new HBox()
-    topBox.setStyle("-fx-background-color: #f08080;")
+    topBox.setStyle("-fx-background-color: #755139FF;")
     val homeButton: Button = new Button("home")
     homeButton.setOnAction(new EventHandler[ActionEvent]{
         override def handle(event: ActionEvent): Unit = SceneController.switchToMenu()
@@ -31,13 +33,13 @@ object GamePane{
     
     topBox.getChildren().addAll(homeButton, mazeSmallerButton, mazeLargerButton)
     val bottomBox: HBox = new HBox()
-    bottomBox.setStyle("-fx-background-color: #f08080;")
+    bottomBox.setStyle("-fx-background-color: #755139FF;")
     val leftBox: VBox = new VBox()
-    leftBox.setStyle("-fx-background-color: #f08080;")
+    leftBox.setStyle("-fx-background-color: #755139FF;")
     val rightBox: VBox = new VBox()
-    rightBox.setStyle("-fx-background-color: #f08080;")
+    rightBox.setStyle("-fx-background-color: #755139FF;")
     val centerBox: Pane = new Pane()
-    centerBox.setStyle("-fx-background-color: #f8ad9d;")
+    centerBox.setStyle("-fx-background-color: #F2EDD7FF;")
     centerBox.getChildren().add(GameController.getGridCanvas())
 
     borderPane.setTop(topBox)
@@ -47,6 +49,23 @@ object GamePane{
     borderPane.setCenter(centerBox)
 
     gamePane.getChildren().add(borderPane)
+
+    gamePane.setOnKeyPressed(new EventHandler[KeyEvent]() {
+            override def handle(event: KeyEvent) = {
+                if (event.getCode() == KeyCode.A) {
+                    GameController.moveLeft()
+                }
+                if (event.getCode() == KeyCode.D) {
+                    GameController.moveRight()
+                }
+                if (event.getCode() == KeyCode.W) {
+                    GameController.moveUp()
+                }
+                if (event.getCode() == KeyCode.S) {
+                    GameController.moveDown()
+                }
+            }
+        })
 
     // Resize grid and borders
     def reSize(width: Double, height: Double, boxSize: Double): Unit = {
