@@ -114,6 +114,7 @@ object MenuPane{
             val numRows: Int = numRowsSlider.getValue().toInt
 
             GameController.changeMazeDimensions(numCols,numRows)
+            GameController.resetDefaults()
             SceneController.switchToGame()
 
         }

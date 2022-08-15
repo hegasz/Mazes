@@ -51,82 +51,19 @@ object DrawMaze extends JFXApp3 {
 
     override def start(): Unit = {
 
-        println(getEmptyGrid(3,3))
-
         val frame = IntegerProperty(0)
         val screenDimensions = ObjectProperty(ScreenDimensions(900,700))
 
         frame.onChange {
             screenDimensions.update(ScreenDimensions(stage.getScene().getWidth(),stage.getScene().getHeight()))
+            GameController.clockTick(frame.value)
         }
 
-        
         stage = new JFXApp3.PrimaryStage
 
         screenDimensions.onChange(Platform.runLater {
             GameController.reSize(screenDimensions.value.width, screenDimensions.value.height)
         })
-
-        /**
-        val gameScene: Scene = new Scene(800,600) {
-            val borderPane: BorderPane = new BorderPane()
-            val topBox: HBox = new HBox()
-            topBox.setStyle("-fx-background-color: red;")
-            val homeButton: Button = new Button("home")
-            
-            topBox.getChildren().add(homeButton)
-            val bottomBox: HBox = new HBox()
-            bottomBox.setStyle("-fx-background-color: green;")
-            val leftBox: VBox = new VBox()
-            leftBox.setStyle("-fx-background-color: blue;")
-            val rightBox: VBox = new VBox()
-            rightBox.setStyle("-fx-background-color: yellow;")
-            val centerBox: Pane = new Pane()
-            centerBox.setStyle("-fx-background-color: purple;")
-            centerBox.getChildren().add(gridState.value.canvas)
-
-            borderPane.setTop(topBox)
-            borderPane.setBottom(bottomBox)
-            borderPane.setLeft(leftBox)
-            borderPane.setRight(rightBox)
-            borderPane.setCenter(centerBox)
-        
-            content = borderPane
-
-            // Resize grid and borders
-            screenDimensions.onChange(Platform.runLater {
-                var limitingSize = screenDimensions.value.width.min(screenDimensions.value.height)
-                var boxSize = limitingSize * mazeBoxRatio
-
-                gridState.update(GridState(size, maze, boxSize))
-        
-                var borderHeight: Double = 0; var borderWidth: Double = 0
-                
-                centerBox.getChildren().clear()
-                centerBox.getChildren().add(gridState.value.canvas)
-
-                centerBox.setMinWidth(boxSize)
-                centerBox.setMinHeight(boxSize)
-                centerBox.setMaxWidth(boxSize)
-                centerBox.setMaxHeight(boxSize)
-
-                borderHeight = (this.getHeight()-boxSize)/2
-                borderWidth = (this.getWidth()-boxSize)/2
-
-                topBox.setMinHeight(borderHeight)
-                bottomBox.setMinHeight(borderHeight)
-                leftBox.setMinWidth(borderWidth)
-                rightBox.setMinWidth(borderWidth)
-                topBox.setMaxHeight(borderHeight)
-                bottomBox.setMaxHeight(borderHeight)
-                leftBox.setMaxWidth(borderWidth)
-                rightBox.setMaxWidth(borderWidth)
-
-                borderPane.setCenter(centerBox)
-                content = borderPane
-            })
-        }
-        */
 
         val tempScene: Scene = new Scene(800,600)
 

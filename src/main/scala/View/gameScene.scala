@@ -9,15 +9,24 @@ import javafx.event.EventHandler
 import javafx.event.ActionEvent
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.KeyCode
-
+import scalafx.scene.control.Label
+import scalafx.scene.layout.StackPane
+import scalafx.geometry.Pos
+import scalafx.scene.control.Slider
+import scalafx.scene.layout.Region
+import scalafx.scene.layout.Priority
+import javafx.beans.value.ChangeListener
 
 
 object GamePane{
 
     val gamePane: Pane = new Pane()
     val borderPane: BorderPane = new BorderPane()
+    
     val topBox: HBox = new HBox()
     topBox.setStyle("-fx-background-color: #755139FF;")
+
+    // buttons
     val homeButton: Button = new Button("home")
     homeButton.setOnAction(new EventHandler[ActionEvent]{
         override def handle(event: ActionEvent): Unit = SceneController.switchToMenu()
@@ -30,14 +39,58 @@ object GamePane{
     mazeLargerButton.setOnAction(new EventHandler[ActionEvent]{
         override def handle(event: ActionEvent): Unit = GameController.increaseBoxRatio(0.1)
     })
-    
     topBox.getChildren().addAll(homeButton, mazeSmallerButton, mazeLargerButton)
+
+    // Box for movement controls
+    val movementBox: HBox = new HBox()
+    val switchPane: BorderPane = new BorderPane()
+    val switchClass = new ToggleSwitch()
+    val switch = switchClass.switch
+    switchClass.state.onChange{(_, _, newValue) =>
+            if(newValue) GameController.setPacmanControls()
+            else GameController.setDiscreteControls()
+           }
+    val leftLabel: Label = new Label(" discrete")
+    val rightLabel: Label = new Label("pacman ")
+    val topLabel: Label = new Label("movement style:")
+    val speedControlBox: VBox = new VBox()
+    val speedLabel: Label = new Label("movement speed:")
+    val speedSlider: Slider = new Slider(1,10,5)
+    speedSlider.setMajorTickUnit(1)
+    speedSlider.setMinorTickCount(0)
+    speedSlider.setSnapToTicks(true)
+    speedSlider.setMaxWidth(100)
+    speedSlider.setMinWidth(100)
+    speedSlider.setRotate(180)
+    speedSlider.setStyle("-fx-base: #000000; -fx-control-inner-background: #f08080;")    
+    speedSlider.valueProperty().addListener((observable, oldValue, newValue) => {
+        GameController.setPacmanSpeed(newValue.intValue())
+    })
+    speedControlBox.getChildren().addAll(speedLabel,speedSlider)
+    speedControlBox.setAlignment(Pos.TopCenter)
+    switchPane.setLeft(leftLabel)
+    switchPane.setCenter(switch)
+    switchPane.setRight(rightLabel)
+    switchPane.setTop(topLabel)
+    switchPane.setMinSize(150,30)
+    switchPane.setMaxSize(150,30)
+    BorderPane.setAlignment(leftLabel,Pos.CenterRight)
+    BorderPane.setAlignment(rightLabel,Pos.CenterLeft)
+    BorderPane.setAlignment(topLabel,Pos.BottomCenter)
+    val region1: Region = new Region()
+    region1.hgrow = Priority.Always
+    val region2: Region = new Region()
+    region2.hgrow = Priority.Always
+    // add movement box to top box with separating regions
+    topBox.getChildren().addAll(region1, speedControlBox, region2, switchPane)
+
     val bottomBox: HBox = new HBox()
     bottomBox.setStyle("-fx-background-color: #755139FF;")
     val leftBox: VBox = new VBox()
     leftBox.setStyle("-fx-background-color: #755139FF;")
     val rightBox: VBox = new VBox()
     rightBox.setStyle("-fx-background-color: #755139FF;")
+
     val centerBox: Pane = new Pane()
     centerBox.setStyle("-fx-background-color: #F2EDD7FF;")
     centerBox.getChildren().add(GameController.getGameStack())
@@ -50,19 +103,20 @@ object GamePane{
 
     gamePane.getChildren().add(borderPane)
 
+    // respond to movement keys
     gamePane.setOnKeyPressed(new EventHandler[KeyEvent]() {
             override def handle(event: KeyEvent) = {
                 if (event.getCode() == KeyCode.A) {
-                    GameController.moveLeft()
+                    GameController.handleLeft()
                 }
                 if (event.getCode() == KeyCode.D) {
-                    GameController.moveRight()
+                    GameController.handleRight()
                 }
                 if (event.getCode() == KeyCode.W) {
-                    GameController.moveUp()
+                    GameController.handleUp()
                 }
                 if (event.getCode() == KeyCode.S) {
-                    GameController.moveDown()
+                    GameController.handleDown()
                 }
             }
         })
