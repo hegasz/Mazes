@@ -17,4 +17,4 @@ To-Do:
 - [ ] Add either help button or a stackpane overlay with instructions that fades away.
 - [ ] Add another maze generation algorithm
 - [x] Make speed slider disappear when on discrete controls
-- [ ] Add a queued direction to pacman controls
+- [x] Add a queued direction to pacman controls

@@ -208,36 +208,65 @@ case class GameStack(size: Size, mazeInput: Maze, val boxSize: Double, lineThick
         player.fillOval(x+(lineLength*3/8), y+(lineLength*3/8), diameter, diameter)
     }
 
-    def movePlayerLeft(): Unit = {
+    /** Clears canvas and redraws player in new position
+     * @return whether move was carried out */
+    def movePlayerLeft(): Boolean = {
         val newPlayerX = playerX - 1
         val doesMazeAllow = maze.grid(playerY)(playerX) contains W
         if(newPlayerX >= 0 && doesMazeAllow){
             drawPlayerAtGridCoords(newPlayerX, playerY)
             playerX = newPlayerX
+            return true
         }
+        return false
     }
-    def movePlayerRight(): Unit = {
+    /** Clears canvas and redraws player in new position
+     * @return whether move was carried out */
+    def movePlayerRight(): Boolean = {
         val newPlayerX = playerX + 1
         val doesMazeAllow = maze.grid(playerY)(playerX) contains E
         if(newPlayerX < numCols && doesMazeAllow){
             drawPlayerAtGridCoords(newPlayerX, playerY)
             playerX = newPlayerX
+            return true
         }
+        return false
     }
-    def movePlayerUp(): Unit = {
+    /** Clears canvas and redraws player in new position
+     * @return whether move was carried out */
+    def movePlayerUp(): Boolean = {
         val newPlayerY = playerY + 1
         val doesMazeAllow = maze.grid(playerY)(playerX) contains N
         if(newPlayerY < numRows && doesMazeAllow){
             drawPlayerAtGridCoords(playerX, newPlayerY)
             playerY = newPlayerY
+            return true
         }
+        return false
     }
-    def movePlayerDown(): Unit = {
+    /** Clears canvas and redraws player in new position
+     * @return whether move was carried out */
+    def movePlayerDown(): Boolean = {
         val newPlayerY = playerY - 1
         val doesMazeAllow = maze.grid(playerY)(playerX) contains S
         if(newPlayerY >= 0 && doesMazeAllow){
             drawPlayerAtGridCoords(playerX, newPlayerY)
             playerY = newPlayerY
+            return true
         }
+        return false
+    }
+
+    def canMoveLeft(): Boolean = {
+        maze.grid(playerY)(playerX) contains W
+    }
+    def canMoveRight(): Boolean = {
+        maze.grid(playerY)(playerX) contains E
+    }
+    def canMoveUp(): Boolean = {
+        maze.grid(playerY)(playerX) contains N
+    }
+    def canMoveDown(): Boolean = {
+        maze.grid(playerY)(playerX) contains S
     }
 }
