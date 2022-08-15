@@ -15,6 +15,6 @@ To-Do:
 - [x] Add win screen when end reached with possibility to restart or create a new maze
 - [ ] Add time limit for solving maze (toggleable?)
 - [ ] Add either help button or a stackpane overlay with instructions that fades away.
-- [ ] Add another maze generation algorithm
+- [x] Add another maze generation algorithm
 - [x] Make speed slider disappear when on discrete controls
 - [x] Add a queued direction to pacman controls

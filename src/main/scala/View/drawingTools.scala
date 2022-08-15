@@ -36,8 +36,6 @@ case class ScreenDimensions(var width: Double, var height: Double)
   */
 case class GameStack(size: Size, mazeInput: Maze, val boxSize: Double, lineThicknessPercentage: Double = 5, borderThicknessMultiplier: Int = 1, forDisplayOnly: Boolean = false){
 
-    // TO-DO: CLEAN UP - QUITE A LOT OF THESE METHODS NOT ACTUALLY NEEDED
-
     private val numCols: Int = size._1; private val numRows: Int = size._2
     private var lineLength: Double = boxSize/((numCols).max(numRows))
     private var lineWidth: Double = (lineThicknessPercentage/100)*lineLength

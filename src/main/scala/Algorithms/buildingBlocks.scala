@@ -25,6 +25,7 @@ object buildingBlocks{
     // 2D array representing all points in grid, storing set of direction
     // that ARE ACCESSIBLE from that point (not direction of walls). Note
     // you must call grid(y)(x), in the order opposite to usual coordinate use.
+    // (0,0) is bottom left.
     type Grid = Array[Array[Set[Direction]]]
 
     def getEmptyGrid(numCols: Int, numRows: Int): Grid = {

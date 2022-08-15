@@ -177,4 +177,9 @@ object GamePane{
 
     def showSpeedSlider(): Unit = speedControlBox.setVisible(true)
     def hideSpeedSlider(): Unit = speedControlBox.setVisible(false)
+
+    def updateMazeAlgorithm(): Unit = {
+        centerBox.getChildren().clear()
+        centerBox.getChildren().add(GameController.getGameStack())
+    }
 }

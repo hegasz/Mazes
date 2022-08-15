@@ -4,7 +4,6 @@ import buildingBlocks._
 import Direction._
 import scala.util.Random
 
-import mazeDebugging.mazeToString
 
 object RecursiveBacktracking{
 

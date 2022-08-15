@@ -95,7 +95,8 @@ object MenuPane{
 
     val algorithms = ObservableBuffer(
         "Randomised Recursive Backtracking (longer corridors)",
-        "Randomised Kruskal's MST (shorter corridors)"
+        "Randomised Kruskal's MST (shorter corridors)",
+        "Random Binary Tree (strong diagonal bias)"
     )
     val mazeAlgorithmChoice = new ChoiceBox(algorithms)
     mazeAlgorithmChoice.setValue("Randomised Recursive Backtracking (longer corridors)")
@@ -114,6 +115,7 @@ object MenuPane{
             val numRows: Int = numRowsSlider.getValue().toInt
 
             GameController.changeMazeDimensions(numCols,numRows)
+            GameController.changeMazeAlgorithm(mazeAlgorithmChoice.getValue())
             GameController.resetDefaults()
             SceneController.switchToGame()
 

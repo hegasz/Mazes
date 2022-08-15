@@ -2,6 +2,9 @@ package view
 
 import algorithms.buildingBlocks._
 import algorithms.RecursiveBacktracking._
+import algorithms.Kruskal._
+import algorithms.BinaryTree._
+import algorithms.RecursiveBacktracking._
 import scalafx.beans.property.ObjectProperty
 import scalafx.scene.canvas.Canvas
 import scalafx.scene.layout.StackPane
@@ -50,6 +53,17 @@ object GameController{
         screenWidth = width; screenHeight = height
         gridState.update(GameStack(size, maze, boxSize))
         GamePane.reSize(width, height, boxSize)
+    }
+
+    def changeMazeAlgorithm(newAlgorithm: String): Unit = {
+        newAlgorithm match {
+            case "Randomised Recursive Backtracking (longer corridors)" => maze = RecursiveBacktrackingMazeBuilder(size)
+            case "Randomised Kruskal's MST (shorter corridors)" => maze = KruskalMazeBuilder(size)
+            case "Random Binary Tree (strong diagonal bias)" => maze = BinaryTreeMazeBuilder(size)
+            case _ => 
+        }
+        gridState.update(GameStack(size, maze, boxSize))
+        GamePane.updateMazeAlgorithm()
     }
 
     def updateBoxRatio(newRatio: Double): Unit = {
