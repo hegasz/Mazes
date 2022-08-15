@@ -15,7 +15,7 @@ object GameController{
     var screenWidth: Double = 900; var screenHeight: Double = 700
     val direction = IntegerProperty(5) // 1-left, 2-right, 3-up, 4-down, any other value do nothing
     var controls = "discrete" // or pacman
-    var pacmanSpeed = 5
+    var pacmanSpeed = 4
 
     def resetDefaults(): Unit = {
         direction.value = 5

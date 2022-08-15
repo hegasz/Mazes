@@ -16,5 +16,5 @@ To-Do:
 - [ ] Add time limit for solving maze (toggleable?)
 - [ ] Add either help button or a stackpane overlay with instructions that fades away.
 - [ ] Add another maze generation algorithm
-- [ ] Make speed slider disappear when on discrete controls
+- [x] Make speed slider disappear when on discrete controls
 - [ ] Add a queued direction to pacman controls

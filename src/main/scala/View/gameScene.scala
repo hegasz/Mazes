@@ -47,15 +47,21 @@ object GamePane{
     val switchClass = new ToggleSwitch()
     val switch = switchClass.switch
     switchClass.state.onChange{(_, _, newValue) =>
-            if(newValue) GameController.setPacmanControls()
-            else GameController.setDiscreteControls()
+            if(newValue){
+                GameController.setPacmanControls()
+                showSpeedSlider()
+            }
+            else{
+                GameController.setDiscreteControls()
+                hideSpeedSlider()
+            }
            }
     val leftLabel: Label = new Label(" discrete")
     val rightLabel: Label = new Label("pacman ")
     val topLabel: Label = new Label("movement style:")
     val speedControlBox: VBox = new VBox()
     val speedLabel: Label = new Label("movement speed:")
-    val speedSlider: Slider = new Slider(1,10,5)
+    val speedSlider: Slider = new Slider(1,7,4)
     speedSlider.setMajorTickUnit(1)
     speedSlider.setMinorTickCount(0)
     speedSlider.setSnapToTicks(true)
@@ -81,8 +87,26 @@ object GamePane{
     region1.hgrow = Priority.Always
     val region2: Region = new Region()
     region2.hgrow = Priority.Always
-    // add movement box to top box with separating regions
-    topBox.getChildren().addAll(region1, speedControlBox, region2, switchPane)
+    val region3: Region = new Region()
+    region3.hgrow = Priority.Always
+    val region4: Region = new Region()
+    region4.hgrow = Priority.Always
+    val region5: Region = new Region()
+    region5.hgrow = Priority.Always
+    val region6: Region = new Region()
+    region6.hgrow = Priority.Always
+    val region7: Region = new Region()
+    region7.hgrow = Priority.Always
+    val region8: Region = new Region()
+    region8.hgrow = Priority.Always
+    val region9: Region = new Region()
+    region9.hgrow = Priority.Always
+    // add movement box to top box with separating regions to center slider
+    speedControlBox.setVisible(false)
+    topBox.getChildren().addAll(region1, region3, region4, region6, region8,
+                                speedControlBox,
+                                region2, region5, region7, region9,
+                                switchPane)
 
     val bottomBox: HBox = new HBox()
     bottomBox.setStyle("-fx-background-color: #755139FF;")
@@ -150,4 +174,7 @@ object GamePane{
         gamePane.getChildren().clear()
         gamePane.getChildren().add(borderPane)
     }
+
+    def showSpeedSlider(): Unit = speedControlBox.setVisible(true)
+    def hideSpeedSlider(): Unit = speedControlBox.setVisible(false)
 }
