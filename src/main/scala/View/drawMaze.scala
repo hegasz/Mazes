@@ -46,7 +46,7 @@ object DrawMaze extends JFXApp3 {
     def gameLoop(update: () => Unit): Unit =
         Future {
         update()
-        Thread.sleep(1000 / 25 * 2)
+        Thread.sleep(80)
         }.flatMap(_ => Future(gameLoop(update)))
 
     override def start(): Unit = {
@@ -68,6 +68,7 @@ object DrawMaze extends JFXApp3 {
         val tempScene: Scene = new Scene(800,600)
 
         SceneController.scene = tempScene
+        SceneController.stage = stage // used for popup windows
         SceneController.switchToMenu()
 
         stage.setScene(tempScene)

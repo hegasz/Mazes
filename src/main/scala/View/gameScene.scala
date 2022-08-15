@@ -16,6 +16,10 @@ import scalafx.scene.control.Slider
 import scalafx.scene.layout.Region
 import scalafx.scene.layout.Priority
 import javafx.beans.value.ChangeListener
+import scalafx.animation.FadeTransition
+import javafx.util.Duration
+import scalafx.scene.text.TextAlignment
+import scalafx.scene.text.Text
 
 
 object GamePane{
@@ -25,24 +29,52 @@ object GamePane{
     
     val topBox: HBox = new HBox()
     topBox.setStyle("-fx-background-color: #755139FF;")
+    //topBox.minWidthProperty().bind(gamePane.widthProperty())
+    //topBox.maxWidthProperty().bind(gamePane.widthProperty())
 
-    // buttons
+
+    // *start* top left buttons box
+    val buttonsBox: HBox = new HBox()
     val homeButton: Button = new Button("home")
     homeButton.setOnAction(new EventHandler[ActionEvent]{
         override def handle(event: ActionEvent): Unit = SceneController.switchToMenu()
     })
+    val helpButton: Button = new Button("help")
+    helpButton.setOnAction(new EventHandler[ActionEvent]{
+        override def handle(event: ActionEvent): Unit = showHelp()
+    })
     val mazeSmallerButton: Button = new Button("-")
     mazeSmallerButton.setOnAction(new EventHandler[ActionEvent]{
-        override def handle(event: ActionEvent): Unit = GameController.decreaseBoxRatio(0.1)
+        override def handle(event: ActionEvent): Unit = GameController.decreaseBoxRatio()
     })
     val mazeLargerButton: Button = new Button("+")
     mazeLargerButton.setOnAction(new EventHandler[ActionEvent]{
-        override def handle(event: ActionEvent): Unit = GameController.increaseBoxRatio(0.1)
+        override def handle(event: ActionEvent): Unit = GameController.increaseBoxRatio()
     })
-    topBox.getChildren().addAll(homeButton, mazeSmallerButton, mazeLargerButton)
+    buttonsBox.getChildren().addAll(homeButton, helpButton, mazeSmallerButton, mazeLargerButton)
+    // *end* top left buttons box
 
-    // Box for movement controls
-    val movementBox: HBox = new HBox()
+
+    // *start* help labels
+    val leftButtonsHelp: Label = new Label("                                      ^^^\n               Adjust how big the maze is")
+    val movementToggleHelp: Label = new Label("                        ^^^\nChange movement style")
+    val mazeHelp: Label = new Label("\nUse WASD keys to move the circle from the\nbottom left to the top right of the maze")
+    /** leftButtonsHelp and movementToggleHelp are placed at the top in boxes later on below
+      * mazeHelp is placed in bottomBox later on below */
+    mazeHelp.setTextAlignment(TextAlignment.Center)
+    leftButtonsHelp.setVisible(false)
+    movementToggleHelp.setVisible(false)
+    mazeHelp.setVisible(false)
+    // *end* help labels
+
+    // *start* top left buttons and help message box
+    val buttonsAndHelpBox: VBox = new VBox()
+    buttonsAndHelpBox.getChildren().addAll(buttonsBox,leftButtonsHelp)
+    topBox.getChildren().add(buttonsAndHelpBox)
+    // *end* top left buttons and help message box
+
+
+    // *start* movement control toggle switch
     val switchPane: BorderPane = new BorderPane()
     val switchClass = new ToggleSwitch()
     val switch = switchClass.switch
@@ -59,6 +91,25 @@ object GamePane{
     val leftLabel: Label = new Label(" discrete")
     val rightLabel: Label = new Label("pacman ")
     val topLabel: Label = new Label("movement style:")
+    switchPane.setLeft(leftLabel)
+    switchPane.setCenter(switch)
+    switchPane.setRight(rightLabel)
+    switchPane.setTop(topLabel)
+    switchPane.setMinSize(150,30)
+    switchPane.setMaxSize(150,30)
+    BorderPane.setAlignment(leftLabel,Pos.CenterRight)
+    BorderPane.setAlignment(rightLabel,Pos.CenterLeft)
+    BorderPane.setAlignment(topLabel,Pos.BottomCenter)
+    // *end* movement control toggle switch
+
+    // *start* movement control toggle and help message box
+    val movementToggleAndHelpBox: VBox = new VBox()
+    movementToggleAndHelpBox.getChildren().addAll(switchPane, movementToggleHelp)
+    // this is added to the top later on below
+    // *end* movement control toggle and help message box
+
+
+    // *start* speed control slider
     val speedControlBox: VBox = new VBox()
     val speedLabel: Label = new Label("movement speed:")
     val speedSlider: Slider = new Slider(1,7,4)
@@ -74,42 +125,27 @@ object GamePane{
     })
     speedControlBox.getChildren().addAll(speedLabel,speedSlider)
     speedControlBox.setAlignment(Pos.TopCenter)
-    switchPane.setLeft(leftLabel)
-    switchPane.setCenter(switch)
-    switchPane.setRight(rightLabel)
-    switchPane.setTop(topLabel)
-    switchPane.setMinSize(150,30)
-    switchPane.setMaxSize(150,30)
-    BorderPane.setAlignment(leftLabel,Pos.CenterRight)
-    BorderPane.setAlignment(rightLabel,Pos.CenterLeft)
-    BorderPane.setAlignment(topLabel,Pos.BottomCenter)
+    // *end* speed control slider
+    
+
+    // *start* place items at top of window with padding to align nicely
     val region1: Region = new Region()
     region1.hgrow = Priority.Always
     val region2: Region = new Region()
     region2.hgrow = Priority.Always
-    val region3: Region = new Region()
-    region3.hgrow = Priority.Always
-    val region4: Region = new Region()
-    region4.hgrow = Priority.Always
-    val region5: Region = new Region()
-    region5.hgrow = Priority.Always
-    val region6: Region = new Region()
-    region6.hgrow = Priority.Always
-    val region7: Region = new Region()
-    region7.hgrow = Priority.Always
-    val region8: Region = new Region()
-    region8.hgrow = Priority.Always
-    val region9: Region = new Region()
-    region9.hgrow = Priority.Always
     // add movement box to top box with separating regions to center slider
     speedControlBox.setVisible(false)
-    topBox.getChildren().addAll(region1, region3, region4, region6, region8,
+    topBox.getChildren().addAll(region1,
                                 speedControlBox,
-                                region2, region5, region7, region9,
-                                switchPane)
+                                region2,
+                                movementToggleAndHelpBox)
+    // *end* place items at top of window with padding to align nicely
+
 
     val bottomBox: HBox = new HBox()
     bottomBox.setStyle("-fx-background-color: #755139FF;")
+    bottomBox.getChildren().add(mazeHelp)
+    bottomBox.setAlignment(Pos.TopCenter)
     val leftBox: VBox = new VBox()
     leftBox.setStyle("-fx-background-color: #755139FF;")
     val rightBox: VBox = new VBox()
@@ -181,5 +217,29 @@ object GamePane{
     def updateMazeAlgorithm(): Unit = {
         centerBox.getChildren().clear()
         centerBox.getChildren().add(GameController.getGameStack())
+    }
+
+    def showHelp(): Unit = {
+        leftButtonsHelp.setVisible(true)
+        movementToggleHelp.setVisible(true)
+        mazeHelp.setVisible(true)
+        val fade: FadeTransition = new FadeTransition()
+        fade.setDuration(Duration.millis(5000));  
+        fade.setFromValue(10);  
+        fade.setToValue(0)
+        fade.setNode(leftButtonsHelp)
+        fade.play()
+        val fade2: FadeTransition = new FadeTransition()
+        fade2.setDuration(Duration.millis(5000));  
+        fade2.setFromValue(10);  
+        fade2.setToValue(0)
+        fade2.setNode(movementToggleHelp)
+        fade2.play()
+        val fade3: FadeTransition = new FadeTransition()
+        fade3.setDuration(Duration.millis(5000));  
+        fade3.setFromValue(10);  
+        fade3.setToValue(0)
+        fade3.setNode(mazeHelp)
+        fade3.play()
     }
 }

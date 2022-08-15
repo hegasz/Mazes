@@ -17,5 +17,4 @@ object MenuController{
 
     def getMiniGridCanvas(): Canvas = miniGrid.gridCanvas
     
-
 }

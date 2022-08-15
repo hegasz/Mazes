@@ -67,15 +67,15 @@ object GameController{
     }
 
     def updateBoxRatio(newRatio: Double): Unit = {
-        if(newRatio > 0 && newRatio <=0.9){
+        if(newRatio > 0 && newRatio <=0.8){
             mazeBoxRatio = newRatio
             gridState.update(GameStack(size, maze, boxSize))
             GamePane.reSize(screenWidth, screenHeight, boxSize)
         }
     }
 
-    def decreaseBoxRatio(decrement: Double): Unit = updateBoxRatio(mazeBoxRatio-decrement)
-    def increaseBoxRatio(increment: Double): Unit = updateBoxRatio(mazeBoxRatio+increment)
+    def decreaseBoxRatio(): Unit = updateBoxRatio(mazeBoxRatio-0.1)
+    def increaseBoxRatio(): Unit = updateBoxRatio(mazeBoxRatio+0.1)
 
     def changeMazeDimensions(numCols: Int, numRows: Int): Unit = {
         val newSize: Size = (numCols, numRows)

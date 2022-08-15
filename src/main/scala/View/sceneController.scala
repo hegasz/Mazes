@@ -9,11 +9,13 @@ import scalafx.scene.control.Button
 import javafx.event.EventHandler
 import scala.collection.mutable.HashMap
 import scalafx.scene.layout.Pane
+import scalafx.application.JFXApp3
 
 
 object SceneController{
 
     var scene: Scene = null
+    var stage: JFXApp3.PrimaryStage = null
     var activeScene: String = ""
 
     private val hashMap: HashMap[String, Pane] = new HashMap()
