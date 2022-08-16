@@ -15,7 +15,6 @@ import scalafx.application.JFXApp3
 object SceneController{
 
     var scene: Scene = null
-    var stage: JFXApp3.PrimaryStage = null
     var activeScene: String = ""
 
     private val hashMap: HashMap[String, Pane] = new HashMap()

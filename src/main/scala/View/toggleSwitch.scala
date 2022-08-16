@@ -13,11 +13,11 @@ import javafx.event.EventHandler
 import scalafx.beans.property.BooleanProperty.apply
 import scalafx.beans.property.BooleanProperty
 
-class ToggleSwitch{
+class ToggleSwitch(onColour: String, offColour: String, thumbColour: String){
     val back: Rectangle = new Rectangle(30, 10, Color.Red)
     val button: Button = new Button()
-    val buttonStyleOff: String = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 0.2, 0.0, 0.0, 2); -fx-background-color: WHITE;"
-    val buttonStyleOn: String = "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 0.2, 0.0, 0.0, 2); -fx-background-color: WHITE;"
+    val buttonStyleOff: String = s"-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 0.2, 0.0, 0.0, 2); -fx-background-color: #$thumbColour;"
+    val buttonStyleOn: String = s"-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 0.2, 0.0, 0.0, 2); -fx-background-color: #$thumbColour;"
     var state = BooleanProperty(false)
     var switch: StackPane = new StackPane()
 
@@ -30,7 +30,7 @@ class ToggleSwitch{
     back.minHeight(10)
     back.setArcHeight(back.getHeight())
     back.setArcWidth(back.getHeight())
-    back.setFill(Color.valueOf("#f08080"))
+    back.setFill(Color.valueOf(s"#$offColour"))
     val r: Double = 2.0;
     button.setShape(new Circle(r));
     StackPane.setAlignment(button, Pos.CenterLeft);
@@ -42,12 +42,12 @@ class ToggleSwitch{
             override def handle(e: Event): Unit = {
                 if (state.value) {
                     button.setStyle(buttonStyleOff)
-                    back.setFill(Color.valueOf("#f08080"))
+                    back.setFill(Color.valueOf(s"#$offColour"))
                     StackPane.setAlignment(button, Pos.CenterLeft)
                     state.value = false
                 } else {
                     button.setStyle(buttonStyleOn)
-                    back.setFill(Color.valueOf("#000000"))
+                    back.setFill(Color.valueOf(s"#$onColour"))
                     StackPane.setAlignment(button, Pos.CenterRight)
                     state.value = true
                 }

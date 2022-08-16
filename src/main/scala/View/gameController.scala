@@ -5,14 +5,18 @@ import algorithms.RecursiveBacktracking._
 import algorithms.Kruskal._
 import algorithms.BinaryTree._
 import algorithms.RecursiveBacktracking._
+import algorithms.MazeDebugging._
 import scalafx.beans.property.ObjectProperty
 import scalafx.scene.canvas.Canvas
 import scalafx.scene.layout.StackPane
 import scalafx.beans.property.IntegerProperty
+import scalafx.application.Platform
+import scala.collection.mutable.Queue
+import javafx.concurrent.Task
 
 object GameController{
-    var size: Size = (5,9)
-    var maze: Maze = RecursiveBacktrackingMazeBuilder(size)
+    var size: Size = (10,10)
+    var maze: Maze = Maze(getEmptyGrid(size._1,size._2),size)
     val gridState = ObjectProperty(GameStack(size, maze, 900))
     var mazeBoxRatio: Double = 0.7 // require this is between 0 and 1
     var screenWidth: Double = 900; var screenHeight: Double = 700
@@ -20,6 +24,10 @@ object GameController{
     val queuedDirection = IntegerProperty(5)
     var controls = "discrete" // or pacman
     var pacmanSpeed = 4
+    var cameraOn: Boolean = true
+    val constructionProcess: Queue[Grid] = new Queue[Grid]()
+    var mazeAlgorithm: String = ""
+    var movementAllowed: Boolean = false
 
     def resetDefaults(): Unit = {
         direction.value = 5
@@ -55,16 +63,62 @@ object GameController{
         GamePane.reSize(width, height, boxSize)
     }
 
-    def changeMazeAlgorithm(newAlgorithm: String): Unit = {
-        newAlgorithm match {
-            case "Randomised Recursive Backtracking (longer corridors)" => maze = RecursiveBacktrackingMazeBuilder(size)
-            case "Randomised Kruskal's MST (shorter corridors)" => maze = KruskalMazeBuilder(size)
-            case "Random Binary Tree (strong diagonal bias)" => maze = BinaryTreeMazeBuilder(size)
+    def startMaze(numCols: Int, numRows: Int, algorithm: String): Unit = {
+        val newSize: Size = (numCols, numRows)
+        size = newSize
+        // set the grid to empty
+        maze = Maze(getEmptyGrid(size._1,size._2),size)
+        gridState.update(GameStack(size, maze, boxSize))
+        GamePane.reSize(screenWidth, screenHeight, boxSize)
+        algorithm match {
+            case "Randomised Recursive Backtracking (longer corridors)" =>{
+                mazeAlgorithm = algorithm
+                maze = RecursiveBacktrackingMazeBuilder(size)
+            }
+            case "Randomised Kruskal's MST (shorter corridors)" =>{
+                mazeAlgorithm = algorithm
+                maze = KruskalMazeBuilder(size)
+            }
+            case "Random Binary Tree (strong diagonal bias)" =>{
+                mazeAlgorithm = algorithm
+                maze = BinaryTreeMazeBuilder(size)
+            }
             case _ => 
         }
-        gridState.update(GameStack(size, maze, boxSize))
-        GamePane.updateMazeAlgorithm()
+        if(size._1*size._2 <= 8100) animateConstruction()
+        else{ // do not animate for mmazes that are too large
+            gridState.update(GameStack(size, maze, boxSize))
+            GamePane.updateMaze()
+        }
     }
+
+    
+    def animateConstruction(): Unit = {
+        movementAllowed = false
+        val numCells: Int = size._1*size._2
+        var timePerMove: Long = 0
+        if(numCells <= 2000) timePerMove = 2000/numCells
+        else timePerMove = 2
+
+        val task: Task[Unit] = new Task[Unit]() {
+            override def call(): Unit = {
+                while(!constructionProcess.isEmpty){
+                    Thread.sleep(timePerMove)
+                    var currentGrid: Grid = constructionProcess.dequeue()
+                    Platform.runLater(() => {
+                        gridState.update(GameStack(size, Maze(currentGrid,size), boxSize))
+                        GamePane.updateMaze()
+                    })
+                }
+            }
+        }
+        task.setOnSucceeded(e => {
+            movementAllowed = true
+        })
+        new Thread(task).start()
+    }
+
+
 
     def updateBoxRatio(newRatio: Double): Unit = {
         if(newRatio > 0 && newRatio <=0.8){
@@ -80,7 +134,12 @@ object GameController{
     def changeMazeDimensions(numCols: Int, numRows: Int): Unit = {
         val newSize: Size = (numCols, numRows)
         size = newSize
-        maze = RecursiveBacktrackingMazeBuilder(size)
+        mazeAlgorithm match {
+            case "Randomised Recursive Backtracking (longer corridors)" => maze = RecursiveBacktrackingMazeBuilder(size)
+            case "Randomised Kruskal's MST (shorter corridors)" => maze = KruskalMazeBuilder(size)
+            case "Random Binary Tree (strong diagonal bias)" => maze = BinaryTreeMazeBuilder(size)
+            case _ => 
+        }
         gridState.update(GameStack(size, maze, boxSize))
         GamePane.reSize(screenWidth, screenHeight, boxSize)
     }
@@ -90,20 +149,28 @@ object GameController{
     def getMazeBoxRatio(): Double = mazeBoxRatio
 
     def handleLeft(): Unit = {
-        if(controls == "discrete") moveLeft()
-        else if(controls == "pacman") changeDirectionLeft()
+        if(movementAllowed){
+            if(controls == "discrete") moveLeft()
+            else if(controls == "pacman") changeDirectionLeft()
+        }
     }
     def handleRight(): Unit = {
-        if(controls == "discrete") moveRight()
-        else if(controls == "pacman") changeDirectionRight()
+        if(movementAllowed){
+            if(controls == "discrete") moveRight()
+            else if(controls == "pacman") changeDirectionRight()
+        }
     }
     def handleUp(): Unit = {
-        if(controls == "discrete") moveUp()
-        else if(controls == "pacman") changeDirectionUp()
+        if(movementAllowed){
+            if(controls == "discrete") moveUp()
+            else if(controls == "pacman") changeDirectionUp()
+        }
     }
     def handleDown(): Unit = {
-        if(controls == "discrete") moveDown()
-        else if(controls == "pacman") changeDirectionDown()
+        if(movementAllowed){
+            if(controls == "discrete") moveDown()
+            else if(controls == "pacman") changeDirectionDown()
+        }
     }
 
     /** Attempts to move player one grid square left

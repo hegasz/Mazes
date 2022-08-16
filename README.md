@@ -8,8 +8,9 @@ To-Do:
 - [x] Display mazes in a prettier way
 - [ ] Implement Kruskal's with weave
 - [ ] Add try-catch to all actions to increase safety
+- [ ] Add log file for when exceptions are caught
 - [x] Add pop up box for if you want maze dimensions more than slider
-- [ ] Add maze construction animation
+- [x] Add maze construction animation
 - [x] Add player that can move around
 - [x] Add start and end tiles
 - [x] Add win screen when end reached with possibility to restart or create a new maze

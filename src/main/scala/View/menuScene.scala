@@ -29,6 +29,7 @@ import scalafx.scene.Group
 import scalafx.stage.Popup
 import scalafx.scene.layout.GridPane
 import scalafx.scene.text.TextAlignment
+import scalafx.application.Platform
 
 object MenuPane{
     val menuPane: Pane = new Pane()
@@ -198,6 +199,7 @@ object MenuPane{
     menuPane.getChildren().add(borderPane)
 
 
+
     def displayDimensionsTooLarge(): Unit = {
         dimensionsTooLargeLabel.setVisible(true)
         val fade: FadeTransition = new FadeTransition()
@@ -292,10 +294,10 @@ object MenuPane{
                 return
             }
         }
-        GameController.changeMazeDimensions(numCols,numRows)
-        GameController.changeMazeAlgorithm(mazeAlgorithmChoice.getValue())
-        GameController.resetDefaults()
         SceneController.switchToGame()
+        GameController.startMaze(numCols, numRows, mazeAlgorithmChoice.getValue())
+        GameController.resetDefaults()
     }
+ 
 
 }

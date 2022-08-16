@@ -22,13 +22,24 @@ import scalafx.scene.text.TextAlignment
 import scalafx.scene.text.Text
 
 
-object GamePane{
+object GamePane{    
+
+    val innerColour: String = "5F4B8BFF"
+    //val outerColour: String = "E69A8DFF"
+
+    //val innerColour: String = "F1C0E8"
+    //val outerColour: String = "FFCFD2"
+
+    //val innerColour: String = "5F4B8BFF"
+    val outerColour: String = "f8ad9d"
+        
 
     val gamePane: Pane = new Pane()
     val borderPane: BorderPane = new BorderPane()
     
     val topBox: HBox = new HBox()
-    topBox.setStyle("-fx-background-color: #755139FF;")
+    topBox.setStyle(s"-fx-background-color: #$outerColour;")
+
     //topBox.minWidthProperty().bind(gamePane.widthProperty())
     //topBox.maxWidthProperty().bind(gamePane.widthProperty())
 
@@ -76,7 +87,7 @@ object GamePane{
 
     // *start* movement control toggle switch
     val switchPane: BorderPane = new BorderPane()
-    val switchClass = new ToggleSwitch()
+    val switchClass = new ToggleSwitch("F4978E","FFDAB9","f08080")
     val switch = switchClass.switch
     switchClass.state.onChange{(_, _, newValue) =>
             if(newValue){
@@ -119,7 +130,7 @@ object GamePane{
     speedSlider.setMaxWidth(100)
     speedSlider.setMinWidth(100)
     speedSlider.setRotate(180)
-    speedSlider.setStyle("-fx-base: #000000; -fx-control-inner-background: #f08080;")    
+    speedSlider.setStyle("-fx-base: #000000; -fx-control-inner-background: #F4978E;")    
     speedSlider.valueProperty().addListener((observable, oldValue, newValue) => {
         GameController.setPacmanSpeed(newValue.intValue())
     })
@@ -143,16 +154,16 @@ object GamePane{
 
 
     val bottomBox: HBox = new HBox()
-    bottomBox.setStyle("-fx-background-color: #755139FF;")
+    bottomBox.setStyle(s"-fx-background-color: #$outerColour;")
     bottomBox.getChildren().add(mazeHelp)
     bottomBox.setAlignment(Pos.TopCenter)
     val leftBox: VBox = new VBox()
-    leftBox.setStyle("-fx-background-color: #755139FF;")
+    leftBox.setStyle(s"-fx-background-color: #$outerColour;")
     val rightBox: VBox = new VBox()
-    rightBox.setStyle("-fx-background-color: #755139FF;")
+    rightBox.setStyle(s"-fx-background-color: #$outerColour;")
 
     val centerBox: Pane = new Pane()
-    centerBox.setStyle("-fx-background-color: #F2EDD7FF;")
+    centerBox.setStyle(s"-fx-background-color: #$innerColour;")
     centerBox.getChildren().add(GameController.getGameStack())
 
     borderPane.setTop(topBox)
@@ -214,7 +225,7 @@ object GamePane{
     def showSpeedSlider(): Unit = speedControlBox.setVisible(true)
     def hideSpeedSlider(): Unit = speedControlBox.setVisible(false)
 
-    def updateMazeAlgorithm(): Unit = {
+    def updateMaze(): Unit = {
         centerBox.getChildren().clear()
         centerBox.getChildren().add(GameController.getGameStack())
     }

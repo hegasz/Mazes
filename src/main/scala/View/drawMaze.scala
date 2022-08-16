@@ -3,7 +3,7 @@ package view
 import algorithms.Kruskal._
 import algorithms.RecursiveBacktracking._
 import algorithms.buildingBlocks._
-import algorithms.mazeDebugging._
+import algorithms.MazeDebugging._
 import javafx.scene.Group
 import javafx.scene.Node
 import javafx.scene.layout.ColumnConstraints
@@ -68,9 +68,8 @@ object DrawMaze extends JFXApp3 {
         val tempScene: Scene = new Scene(800,600)
 
         SceneController.scene = tempScene
-        SceneController.stage = stage // used for popup windows
         SceneController.switchToMenu()
-
+       
         stage.setScene(tempScene)
         stage.show()
 

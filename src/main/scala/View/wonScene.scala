@@ -17,7 +17,7 @@ import scalafx.scene.layout.StackPane
 
 object WonPane{
     val wonPane: Pane = new Pane()
-    wonPane.setStyle("-fx-background-color: #F4978E;")
+    wonPane.setStyle("-fx-background-color: #f8ad9d;")
     val borderPane: BorderPane = new BorderPane()
     borderPane.layoutXProperty().bind(wonPane.widthProperty().subtract(borderPane.widthProperty()).divide(2));
     borderPane.layoutYProperty().bind(wonPane.heightProperty().subtract(borderPane.heightProperty()).divide(2));

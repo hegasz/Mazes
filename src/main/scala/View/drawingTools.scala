@@ -26,15 +26,13 @@ import javafx.scene.paint.Color
 
 case class ScreenDimensions(var width: Double, var height: Double)
 
-/**
-  * 
-  *
-  * @param size
-  * @param windowWidth
-  * @param windowHeight
-  * @param lineThicknessPercentage
+/** Class for creation of stackpanes containing game elements 
+  * @param size size of maze
+  * @param windowWidth width of window the object sits in
+  * @param windowHeight height of window the object sits in
+  * @param lineThicknessPercentage line thickness as percentage of grid square size
   */
-case class GameStack(size: Size, mazeInput: Maze, val boxSize: Double, lineThicknessPercentage: Double = 5, borderThicknessMultiplier: Int = 1, forDisplayOnly: Boolean = false){
+case class GameStack(size: Size, mazeInput: Maze, val boxSize: Double, lineThicknessPercentage: Double = 5, borderThicknessMultiplier: Int = 1, forDisplayOnly: Boolean = false, lineColour: String = "E69A8DFF"){
 
     private val numCols: Int = size._1; private val numRows: Int = size._2
     private var lineLength: Double = boxSize/((numCols).max(numRows))
@@ -58,7 +56,8 @@ case class GameStack(size: Size, mazeInput: Maze, val boxSize: Double, lineThick
     var player = playerCanvas.getGraphicsContext2D()
     var playerX: Int = 0; var playerY: Int = 0 // player (0,0) is bottom left
 
-    grid.setStroke(Color.BLACK)
+    grid.setStroke(Color.web(lineColour))
+    player.setFill(Color.web(lineColour))
 
     if(borderThicknessMultiplier != 1) drawBorder()
 
@@ -70,6 +69,7 @@ case class GameStack(size: Size, mazeInput: Maze, val boxSize: Double, lineThick
 
     // Draw canvas border
     def drawBorder(): Unit = {
+        if(forDisplayOnly) grid.setStroke(Color.BLACK)
         grid.moveTo(0,0)
         grid.setLineWidth(lineWidth*borderThicknessMultiplier)
         grid.lineTo(0,boxSize)
@@ -78,6 +78,7 @@ case class GameStack(size: Size, mazeInput: Maze, val boxSize: Double, lineThick
         grid.lineTo(0,0)
         grid.stroke()
         grid.setLineWidth(lineWidth)
+        grid.setStroke(Color.web(lineColour))
     }
 
     // Turn a grid i index into canvas coordinates.
@@ -181,6 +182,7 @@ case class GameStack(size: Size, mazeInput: Maze, val boxSize: Double, lineThick
 
     // draw display maze grid (no start or stop tiles or game elements) onto canvas
     def drawDisplayGrid(): Unit = {
+        grid.setStroke(Color.BLACK)
         val mazeGrid = maze.grid
         for(j <- 0 until numRows){
             var mazeGridJ = numRows - 1 - j
@@ -195,6 +197,7 @@ case class GameStack(size: Size, mazeInput: Maze, val boxSize: Double, lineThick
         for(i <- 0 until numCols){
             drawS(i,numRows-1)
         }
+        grid.setStroke(Color.web(lineColour))
     }
     
     def drawPlayerAtGridCoords(i: Int, j: Int): Unit = {

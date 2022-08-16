@@ -5,7 +5,7 @@ import Direction._
 
 /** Some functions for helping debug maze problems,
  *  can be deleted if not needed. */
-object mazeDebugging {
+object MazeDebugging {
     def mazeToString(maze: Maze): String = {
         var string = ""
         val size = maze.size
