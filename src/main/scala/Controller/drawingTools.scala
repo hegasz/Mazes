@@ -1,27 +1,11 @@
-package view
+package controller
 
+import algorithms.BuildingBlocks._
+import algorithms.BuildingBlocks.Direction._
 import scalafx.Includes._
-import scalafx.application.JFXApp3
-import scalafx.scene.Scene
-import scalafx.scene.paint.Color._
-import javafx.scene.shape._
-import scalafx.scene.layout.GridPane
-import scalafx.scene.layout.TilePane
-import scalafx.scene.layout.BorderPane
 import scalafx.scene.layout.StackPane
-import scalafx.scene.layout.HBox
-import scalafx.geometry.Insets
-import scalafx.scene.control.Button
-import javafx.scene.layout.ColumnConstraints
-import javafx.scene.layout.RowConstraints
-import javafx.scene.Group
-import javafx.scene.Node
-import algorithms.buildingBlocks._
-import algorithms.buildingBlocks.Direction._
 import scalafx.scene.canvas.Canvas
 import scalafx.scene.text.Font
-
-import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
 
 case class ScreenDimensions(var width: Double, var height: Double)

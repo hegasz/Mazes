@@ -1,6 +1,6 @@
 package algorithms
 
-import buildingBlocks._
+import BuildingBlocks._
 import Direction._
 
 /** Some functions for helping debug maze problems,

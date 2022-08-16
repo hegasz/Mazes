@@ -1,7 +1,7 @@
 package algorithms
 
 /** Basic types and functions defining how mazes are constructed. */
-object buildingBlocks{
+object BuildingBlocks{
 
     sealed trait Direction
 

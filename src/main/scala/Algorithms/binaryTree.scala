@@ -1,11 +1,9 @@
 package algorithms
 
-import buildingBlocks._
+import controller.GameController
+import BuildingBlocks._
 import Direction._
 import scala.util.Random
-import view.GameController
-import scalafx.application.Platform
-import MazeDebugging._
 
 object BinaryTree{
 
@@ -34,7 +32,7 @@ object BinaryTree{
                 }
                 else{
                     // randomly pick either east or north and break that wall
-                    var randomDirection = scala.util.Random.shuffle(directions).head
+                    var randomDirection = Random.shuffle(directions).head
                     var point1: Point = Point(i,j)
                     var point2: Point = move(point1, randomDirection)
                     grid(point1.y)(point1.x) += randomDirection

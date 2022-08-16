@@ -1,15 +1,10 @@
-package view
+package controller
 
+import view.{MenuPane,GamePane,WonPane}
 import scalafx.Includes._
-import scalafx.stage.Stage
 import scalafx.scene.Scene
-import scalafx.scene.Parent
-import javafx.event.ActionEvent
-import scalafx.scene.control.Button
-import javafx.event.EventHandler
 import scala.collection.mutable.HashMap
 import scalafx.scene.layout.Pane
-import scalafx.application.JFXApp3
 
 
 object SceneController{

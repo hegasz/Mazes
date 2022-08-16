@@ -2,7 +2,6 @@ package view
 
 import scalafx.Includes._
 import javafx.event.Event;
-
 import scalafx.geometry.Pos;
 import scalafx.scene.control.Button;
 import scalafx.scene.layout.StackPane;
@@ -10,7 +9,6 @@ import scalafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.event.EventHandler
-import scalafx.beans.property.BooleanProperty.apply
 import scalafx.beans.property.BooleanProperty
 
 class ToggleSwitch(onColour: String, offColour: String, thumbColour: String){

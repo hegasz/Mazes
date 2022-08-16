@@ -1,9 +1,9 @@
 package algorithms
 
-import buildingBlocks._
+import controller.GameController
+import BuildingBlocks._
 import Direction._
 import scala.util.Random
-import view.GameController
 
 
 object RecursiveBacktracking{

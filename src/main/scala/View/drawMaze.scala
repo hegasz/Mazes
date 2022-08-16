@@ -1,44 +1,15 @@
 package view
 
-import algorithms.Kruskal._
-import algorithms.RecursiveBacktracking._
-import algorithms.buildingBlocks._
-import algorithms.MazeDebugging._
-import javafx.scene.Group
-import javafx.scene.Node
-import javafx.scene.layout.ColumnConstraints
-import javafx.scene.layout.Pane
-import javafx.scene.layout.RowConstraints
-import javafx.scene.paint.Color
-import javafx.scene.shape._
-import javafx.scene.transform.Scale
-import scalafx.Includes._
-import scalafx.application.{JFXApp3, Platform}
-import scalafx.geometry.Insets
+
+import controller.GameController
+import controller.SceneController
+import controller.ScreenDimensions
+import scalafx.application.JFXApp3
+import scalafx.application.Platform
+import scalafx.beans.property.IntegerProperty
+import scalafx.beans.property.ObjectProperty
 import scalafx.scene.Scene
-import scalafx.scene.control.MenuBar
-import scalafx.scene.control.Menu
-import scalafx.scene.layout.BorderPane
-import scalafx.scene.layout.AnchorPane
-import scalafx.scene.layout.GridPane
-import scalafx.scene.layout.HBox
-import scalafx.scene.layout.VBox
-import scalafx.scene.layout.StackPane
-import scalafx.scene.layout.TilePane
-import scalafx.scene.paint.Color._
-import javafx.beans.value.ObservableValue
-import javafx.beans.value.ChangeListener
-import scalafx.beans.property.{IntegerProperty, ObjectProperty, DoubleProperty}
 import scala.concurrent.Future
-import scalafx.scene.text.Text
-import scalafx.scene.paint.LinearGradient
-import scalafx.scene.paint.Stops
-import scalafx.scene.effect.DropShadow
-import javafx.geometry.Pos
-import scalafx.scene.canvas.Canvas
-import scalafx.scene.control.Button
-
-
 
 
 object DrawMaze extends JFXApp3 {

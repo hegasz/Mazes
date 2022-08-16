@@ -1,6 +1,6 @@
-package view
+package controller
 
-import algorithms.buildingBlocks._
+import algorithms.BuildingBlocks._
 import scalafx.scene.canvas.Canvas
 
 object MenuController{

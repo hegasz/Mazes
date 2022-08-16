@@ -1,13 +1,11 @@
-package view
+package controller
 
-import algorithms.buildingBlocks._
-import algorithms.RecursiveBacktracking._
+import view.GamePane
+import algorithms.BuildingBlocks._
 import algorithms.Kruskal._
 import algorithms.BinaryTree._
 import algorithms.RecursiveBacktracking._
-import algorithms.MazeDebugging._
 import scalafx.beans.property.ObjectProperty
-import scalafx.scene.canvas.Canvas
 import scalafx.scene.layout.StackPane
 import scalafx.beans.property.IntegerProperty
 import scalafx.application.Platform

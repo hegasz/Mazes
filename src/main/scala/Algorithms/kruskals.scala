@@ -1,11 +1,9 @@
 package algorithms
 
-import buildingBlocks._
+import controller.GameController
+import BuildingBlocks._
 import Direction._
 import scala.util.Random
-import view.GameController
-import algorithms.DisjointSetsFixedElems
-// ^^^ last one not needed but reminds me I need the disjoint sets
 
 
 object Kruskal{

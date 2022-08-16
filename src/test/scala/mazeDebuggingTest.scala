@@ -1,5 +1,5 @@
-import algorithms.mazeDebugging._
-import algorithms.buildingBlocks._
+import algorithms.MazeDebugging._
+import algorithms.BuildingBlocks._
 import Direction._
 
 class mazeDebuggingSuite extends munit.FunSuite {

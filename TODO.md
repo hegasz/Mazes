@@ -3,7 +3,6 @@ To-Do:
 - [x] Implement recursive backtracking iteratively
 - [x] Display mazes in a prettier way
 - [ ] Implement Kruskal's with weave
-- [ ] Add try-catch to all actions to increase safety
 - [ ] Add log file for when exceptions are caught
 - [x] Add pop up box for if you want maze dimensions more than slider
 - [x] Add maze construction animation

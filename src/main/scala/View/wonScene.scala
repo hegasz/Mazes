@@ -1,16 +1,14 @@
 package view
 
+import controller.SceneController
 import scalafx.Includes._
 import scalafx.scene.control.Button
 import scalafx.scene.layout.BorderPane
 import scalafx.scene.layout.Pane
 import javafx.event.EventHandler
 import javafx.event.ActionEvent
-import scalafx.scene.layout.VBox
-import scalafx.scene.control.Label
 import scalafx.scene.text.Text
 import scalafx.scene.paint.LinearGradient
-import scalafx.scene.effect.DropShadow
 import scalafx.scene.paint.Color._
 import scalafx.scene.paint.Stops
 import scalafx.scene.layout.StackPane
@@ -36,11 +34,6 @@ object WonPane{
                 endY = 0,
                 stops = Stops(web("0x00FFFF"), web("0xFF00FF"))
               )
-              //effect = new DropShadow {
-              //  color = DarkGray
-              //  radius = 15
-              //  spread = 0.25
-              //}
             }
     buttonPane.getChildren().add(homeButton)
     borderPane.setCenter(mazeSolvedText)

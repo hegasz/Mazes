@@ -1,5 +1,6 @@
 package view
 
+import controller.{SceneController, GameController}
 import scalafx.scene.layout.BorderPane
 import scalafx.scene.layout.HBox
 import scalafx.scene.control.Button
@@ -10,27 +11,18 @@ import javafx.event.ActionEvent
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.KeyCode
 import scalafx.scene.control.Label
-import scalafx.scene.layout.StackPane
 import scalafx.geometry.Pos
 import scalafx.scene.control.Slider
 import scalafx.scene.layout.Region
 import scalafx.scene.layout.Priority
-import javafx.beans.value.ChangeListener
 import scalafx.animation.FadeTransition
 import javafx.util.Duration
 import scalafx.scene.text.TextAlignment
-import scalafx.scene.text.Text
 
 
 object GamePane{    
 
     val innerColour: String = "5F4B8BFF"
-    //val outerColour: String = "E69A8DFF"
-
-    //val innerColour: String = "F1C0E8"
-    //val outerColour: String = "FFCFD2"
-
-    //val innerColour: String = "5F4B8BFF"
     val outerColour: String = "f8ad9d"
         
 

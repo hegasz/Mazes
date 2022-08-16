@@ -1,9 +1,7 @@
 package view
 
+import controller.{MenuController, SceneController, GameController}
 import scalafx.Includes._
-import scalafx.scene.Scene
-import scalafx.scene.paint.Color._
-import scalafx.scene.layout.StackPane
 import scalafx.scene.control.Button
 import scalafx.scene.layout.Pane
 import javafx.event.EventHandler
@@ -20,16 +18,13 @@ import scalafx.scene.control.Label
 import scalafx.animation.FadeTransition
 import javafx.util.Duration
 import javafx.scene.layout.BorderPane
-import algorithms.buildingBlocks._
 import scalafx.scene.canvas.Canvas
 import scalafx.scene.control.Slider
 import scalafx.geometry.Orientation
-import scalafx.beans.binding.Bindings
 import scalafx.scene.Group
-import scalafx.stage.Popup
 import scalafx.scene.layout.GridPane
 import scalafx.scene.text.TextAlignment
-import scalafx.application.Platform
+
 
 object MenuPane{
     val menuPane: Pane = new Pane()

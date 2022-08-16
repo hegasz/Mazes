@@ -1,7 +1,7 @@
-import algorithms.buildingBlocks._
+import algorithms.BuildingBlocks._
 import Direction._
 
-class buildingBlocksSuite extends munit.FunSuite {
+class BuildingBlocksSuite extends munit.FunSuite {
     test("getEmptyGrid test"){
         val empty: Array[Array[Set[Direction]]] = Array()
         assert(getEmptyGrid(0,0).isEmpty)
