@@ -18,7 +18,7 @@ object GameController{
     private val gridState = ObjectProperty(GameStack(size, maze, 900))
     private var mazeBoxRatio: Double = 0.7 // require this is between 0 and 1
     private var screenWidth: Double = 900; var screenHeight: Double = 700
-    private val direction = IntegerProperty(5) // 1-left, 2-right, 3-up, 4-down, any other value do nothing
+    private val direction = IntegerProperty(5) // 1-left, 2-right, 3-up, 4-down, any other value does nothing
     private val queuedDirection = IntegerProperty(5)
     private var controls = "discrete" // or pacman
     private var pacmanSpeed = 4
@@ -26,7 +26,8 @@ object GameController{
     val constructionProcess: Queue[Grid] = new Queue[Grid]()
     private var mazeAlgorithm: String = ""
     private var movementAllowed: Boolean = false
-
+    
+    // reset directions to a neutral value
     def resetDefaults(): Unit = {
         direction.value = 5
         queuedDirection.value = 5
