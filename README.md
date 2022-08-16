@@ -1,6 +1,6 @@
 ## Maze algorithm explorer 
 
-#### Generate random mazes of any size, watch their construction, and then move a player around to solve them.
+### Generate random mazes of any size, watch their construction, and then move a player around to solve them.
 
 
 Select maze size and generation algorithm you want:
