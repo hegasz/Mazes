@@ -1,0 +1,17 @@
+To-Do:
+- [x] Implement recursive backtracking maze generation
+- [x] Implement recursive backtracking iteratively
+- [x] Display mazes in a prettier way
+- [ ] Implement Kruskal's with weave
+- [ ] Add try-catch to all actions to increase safety
+- [ ] Add log file for when exceptions are caught
+- [x] Add pop up box for if you want maze dimensions more than slider
+- [x] Add maze construction animation
+- [x] Add player that can move around
+- [x] Add start and end tiles
+- [x] Add win screen when end reached with possibility to restart or create a new maze
+- [ ] Add time limit for solving maze (toggleable?)
+- [x] Add either help button or a stackpane overlay with instructions that fades away.
+- [x] Add another maze generation algorithm
+- [x] Make speed slider disappear when on discrete controls
+- [x] Add a queued direction to pacman controls
