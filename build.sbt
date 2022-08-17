@@ -14,6 +14,17 @@ lazy val root = project
   // Add dependency on ScalaFX library
 libraryDependencies += "org.scalafx" %% "scalafx" % "16.0.0-R25"
 
+// Main file for sbt assembly
+assembly / mainClass := Some("view.DrawMaze")
+
+// sbt assembly merge strategy
+assemblyMergeStrategy in assembly := {
+      case "module-info.class" => MergeStrategy.discard
+      case x =>
+        val oldStrategy = (assemblyMergeStrategy in assembly).value
+        oldStrategy(x)
+    }
+
 // Determine OS version of JavaFX binaries
 lazy val osName = System.getProperty("os.name") match {
   case n if n.startsWith("Linux")   => "linux"
